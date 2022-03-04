@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const logger = require('./logger');
 const { mongo, env } = require('./vars');
 
+// set mongoose Promise to Bluebird
+mongoose.Promise = Promise;
+
 // Exit application on error
 mongoose.connection.on('error', (err) => {
   logger.error(`MongoDB connection error: ${err}`);
@@ -22,11 +25,11 @@ if (env === 'development') {
 exports.connect = () => {
   mongoose
     .connect(mongo.uri, {
-      useCreateIndex: true,
+      // useCreateIndex: true,
       keepAlive: 1,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
+      // useFindAndModify: false,
     })
     .then(() => console.log('mongoDB connected...'));
   return mongoose.connection;
